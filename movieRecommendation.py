@@ -18,8 +18,8 @@ user_movie_data.reset_index(inplace=True)
 # Create a pivot table with user IDs as rows and movie titles as columns
 user_movie_matrix = user_movie_data.pivot_table(index='userId', columns='title', values='rating')
 
-# Remove movies with fewer than 10 ratings
-user_movie_matrix = user_movie_matrix.dropna(thresh=10, axis=1)
+# Remove movies with fewer than 1 rating
+user_movie_matrix = user_movie_matrix.dropna(thresh=1, axis=1)
 
 # Fill missing values with 0
 user_movie_matrix.fillna(0, inplace=True)
@@ -36,6 +36,13 @@ def recommend_movies(movie_title):
     similarity_series = movie_similarity_df[movie_title].sort_values(ascending=False)
     return similarity_series.iloc[1:11].index.tolist()
 
+# Print out the list of movie titles in the user_movie_matrix
+print(user_movie_matrix.columns.tolist())
+
 # Example: Recommend movies similar to 'The Dark Knight'
-recommendations = recommend_movies('The Dark Knight (2008)')
-print(recommendations)
+movie_title = 'The Dark Knight (2008)'
+if movie_title in user_movie_matrix.columns:
+    recommendations = recommend_movies(movie_title)
+    print(recommendations)
+else:
+    print(f"Movie '{movie_title}' not found in the dataset.")
