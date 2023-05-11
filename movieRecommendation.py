@@ -40,7 +40,7 @@ def recommend_movies(movie_title):
 print(user_movie_matrix.columns.tolist())
 
 # Example: Recommend movies similar to 'The Dark Knight'
-movie_title = 'The Dark Knight (2008)'
+movie_title = 'Toy Story (1995)'
 if movie_title in user_movie_matrix.columns:
     recommendations = recommend_movies(movie_title)
     print(recommendations)
